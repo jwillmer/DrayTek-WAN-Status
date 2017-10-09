@@ -15,7 +15,6 @@ namespace DrayTek_WAN_Status {
             app.Name = "DrayTek WAN Status";
             app.Description = "The app collects the WAN status message that is send via UDP from a DrayTek modem to your machine.";
             app.HelpOption("-?|-h|--help");
-            // var optionHide = app.Option("-hide", "Start application hidden.", CommandOptionType.NoValue);
             var optionIp = app.Option("-ip <ip>", "The DrayTek router IP. Must be a IP address. Default is 192.168.1.1", CommandOptionType.SingleValue);
             var optionPort = app.Option("-port <port>", "The DrayTek router port. Must be a number. Default is 514", CommandOptionType.SingleValue);
 
@@ -23,19 +22,22 @@ namespace DrayTek_WAN_Status {
             app.OnExecute(() => {
                 var ip = optionIp.HasValue() ? optionIp.Value() : "192.168.1.1";
                 var port = optionPort.HasValue() ? optionPort.Value() : "514";
-                // var hideWindow = optionHide.HasValue();
 
-                if(IPAddress.TryParse(ip, out var ipAddress) && Int32.TryParse(port, out var portNumber)) {
+                Console.WriteLine($"{app.Name} (V.{Assembly.GetEntryAssembly().GetName().Version})");
+                Console.WriteLine();
+
+                if (IPAddress.TryParse(ip, out var ipAddress) && Int32.TryParse(port, out var portNumber)) {
                     Run(ipAddress, portNumber);
-                } else {
+                }
+                else {
                     Console.WriteLine("IP address or port could not be recognized.");
-                }                    
-             
+                }
+
                 return 0;
             });
 
 
-            app.Execute(args);           
+            app.Execute(args);
         }
 
         static void Run(IPAddress ip, int port) {

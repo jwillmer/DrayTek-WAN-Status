@@ -7,6 +7,8 @@
     <Company>-</Company>
     <Authors>Jens Willmer</Authors>
     <Description>The app collects the WAN status message that is send via UDP from a DrayTek modem to your machine.</Description>
+    <AssemblyVersion>1.0.*</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
