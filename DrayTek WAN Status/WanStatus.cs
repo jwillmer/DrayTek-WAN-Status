@@ -33,7 +33,8 @@ namespace DrayTek_WAN_Status {
                 if (!_timestamp.HasValue) {
                     var matchDate = Regex.Match(_rawContent, "(?<=>).*(?= Vigor)");
                     if (!matchDate.Success) { return DateTime.MinValue; }
-                    _timestamp = DateTime.ParseExact(matchDate.Value, "MMM  d HH:mm:ss", CultureInfo.InvariantCulture);
+                    var value = matchDate.Value.Replace("  ", " "); // days smaller then 10 will create an additional space
+                    _timestamp = DateTime.ParseExact(value, "MMM d HH:mm:ss", CultureInfo.InvariantCulture);
                 }
                 return _timestamp.Value;
             }
