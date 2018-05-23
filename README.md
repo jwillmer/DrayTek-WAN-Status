@@ -63,6 +63,6 @@ On the first start the app will create a configuration file (`app.config`) and t
 
 ## Output
 
-![](/media/output-consol.png)
+![](https://github.com/jwillmer/DrayTek-WAN-Status/raw/master/media/output-consol.png)
 
-![](/media/output-csv.png)
+![](https://github.com/jwillmer/DrayTek-WAN-Status/raw/master/media/output-csv.png)
