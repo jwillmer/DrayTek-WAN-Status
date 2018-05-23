@@ -16,4 +16,4 @@ COPY --from=build-env /app/out ./
 ENTRYPOINT ["dotnet", "DrayTek WAN Status.dll"]
 
 VOLUME /app/config /app/data
-EXPOSE 51400
+EXPOSE 51400/udp
