@@ -48,7 +48,7 @@ On the first start the app will create a configuration file (`app.config`) and t
   "DrayTekIp": "192.168.0.1",
   // Define where to safe the data, available options: InfluxDb, Disk
   "StorageProvider": "InfluxDb",
-  // The InfluxDB version, available options: Latest = 0, v_1_3 = 1, v_1_0_0 = 2, v_0_9_6 = 3, v_0_9_5 = 4, v_0_9_2 = 5, v_0_8_x
+  // The InfluxDB version, available options: Latest, v_1_3, v_1_0_0, v_0_9_6, v_0_9_5, v_0_9_2, v_0_8_x
   "InfluxDbVersion": "Latest",
   // InfluxDB URL
   "InfluxDbUrl": "http://192.168.0.2:8086",
