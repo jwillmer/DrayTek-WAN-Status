@@ -6,7 +6,8 @@ The app collects the WAN status message that is send via UDP from a [DrayTek mod
 
 - Build the app from source code and use the command line: `dotnet "DrayTek WAN Status.dll"`
 
-- Use the command line with docker
+- Use the command line with docker:
+
 ```
 docker create \
 	--name draytek-log \
@@ -16,7 +17,9 @@ docker create \
   jwillmer/draytek-wan-status:latest
 ```
 
-- Use a `docker-compose.yml` file
+
+- Use a `docker-compose.yml` file:
+
 ```
 version: "2"
 services:
