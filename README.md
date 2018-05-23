@@ -13,7 +13,7 @@ docker create \
 	-p 514:51400 \
 	-v </path/to/appdata>:/config \
 	-v <path/to/logfiles>:/data \
-  jwillmer/draytek-wan-status
+  jwillmer/draytek-wan-status:latest
 ```
 
 - Use a `docker-compose.yml` file
@@ -22,7 +22,7 @@ version: "2"
 services:
 
   draytek_log:
-    image: jwillmer/draytek-wan-status
+    image: jwillmer/draytek-wan-status:latest
     container_name: "draytek_log"
     volumes:
       - </path/to/logfiles>:/config
