@@ -32,9 +32,9 @@ namespace DrayTek_WAN_Status {
 
         #region Disk storage provider
 
-        static string DirectoryPath = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-        static string LogPath = Path.Combine(DirectoryPath + "DrayTek-WAN-Status.csv");
-        static string ExceptionLogPath = Path.Combine(DirectoryPath + "exception.log");
+        static string DirectoryPath = Directory.GetCurrentDirectory();
+        static string LogPath = Path.Combine(DirectoryPath, "data", "DrayTek-WAN-Status.csv");
+        static string ExceptionLogPath = Path.Combine(DirectoryPath, "data", "exception.log");
 
         void WriteToDisk(WanStatus wan) {
             var header = $"Date; Time; Is Connected; Upload Speed ({wan.SpeedUnit}); Download Speed ({wan.SpeedUnit})";

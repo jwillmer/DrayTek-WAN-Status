@@ -15,7 +15,7 @@ namespace DrayTek_WAN_Status {
             InfluxDbUrl = "http://192.168.0.5:8086";
             InflucDbUser = "username";
             InfluxDbPassword = "password";
-            InfluxDbDatabaseName = "database";
+            InfluxDbDatabaseName = "database";     
         }
                                            
        public bool DisableConsoleOutput { get; set; }
@@ -36,6 +36,6 @@ namespace DrayTek_WAN_Status {
 
         public string InfluxDbPassword { get; set; }
 
-        public string InfluxDbDatabaseName { get; set; }
+        public string InfluxDbDatabaseName { get; set; }    
     }
 }

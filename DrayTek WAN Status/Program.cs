@@ -48,7 +48,7 @@ namespace DrayTek_WAN_Status {
         private static void InitConfiguration() {
             var directory = Directory.GetCurrentDirectory();
             var configName = "app.config";
-            var configPath = Path.Combine(directory, configName);
+            var configPath = Path.Combine(directory, "config", configName);
 
             if (!File.Exists(configPath)) {
                 Settings = new ApplicationSettings();
