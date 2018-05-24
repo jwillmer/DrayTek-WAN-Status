@@ -47,8 +47,6 @@ namespace DrayTek_WAN_Status {
                 File.WriteAllText(configPath, content);
                 Console.WriteLine("No config file found! Creating file: 'app.config'.");
                 Console.WriteLine("Please update config values and restart the application..");
-                Console.ReadKey();
-                Environment.Exit(0);
             }
             else {
                 var content = File.ReadAllText(configPath);
