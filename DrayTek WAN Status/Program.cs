@@ -149,7 +149,9 @@ namespace DrayTek_WAN_Status {
             Console.WriteLine($"Upload:        {wan.UpSpeed} {wan.SpeedUnit}");
             Console.WriteLine($"Timestamp:     {wan.Timestamp.TimeOfDay}");
 
-            Console.SetCursorPosition(0, Console.CursorTop - linePosition);
+            // Console.CursorTop is always 0 in docker
+            int top = (Console.CursorTop - linePosition) >= 0 ? Console.CursorTop - linePosition : 0;
+            Console.SetCursorPosition(0, top);
 
             _storage.Write(wan);
         }
