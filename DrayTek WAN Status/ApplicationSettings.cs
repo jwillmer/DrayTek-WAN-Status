@@ -60,8 +60,7 @@ namespace DrayTek_WAN_Status {
         public string Ip { get; internal set; }
     }
 
-    public class UdpOptions {                 
-        public int QueryIntervalSeconds { get; set; }
+    public class UdpOptions {                          
         public int ListeningPort { get; internal set; }
         public string Ip { get; internal set; }
     }
