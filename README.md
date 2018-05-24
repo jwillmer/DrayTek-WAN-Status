@@ -45,29 +45,6 @@ On the first start the app will create a configuration file (`app.config`) and t
   "DisableConsoleOutput": false,
   // Disables console print of raw data before processing
   "OutputRawData": false,
-  // The listening UDP port - do not change this if you run the app inside docker, just map your port to this one.
-  "ListeningPort": 51400,
-  // IP of your router, to validate that the package is from your router
-  "DrayTekIp": "192.168.0.1",
-  // Define where to safe the data, available options: InfluxDb, Disk
-  "StorageProvider": "InfluxDb",
-  // The InfluxDB version, available options: Latest, v_1_3, v_1_0_0, v_0_9_6, v_0_9_5, v_0_9_2, v_0_8_x
-  "InfluxDbVersion": "Latest",
-  // InfluxDB URL
-  "InfluxDbUrl": "http://192.168.0.2:8086",
-  // InfluxDB username, empty if none
-  "InflucDbUser": "",
-  // InfluxDB password, empty if none
-  "InfluxDbPassword": "",
-  // InfluxDB database name
-  "InfluxDbDatabaseName": "vigor_130"
-}
-
-{
-  // Disables the console output if you run it inside a docker container
-  "DisableConsoleOutput": false,
-  // Disables console print of raw data before processing
-  "OutputRawData": false,
   "QueryOptions": {
     // Define the query option, available options: UDP, Telnet
     "Option": "UDP",
