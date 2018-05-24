@@ -10,7 +10,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 # build runtime image
-FROM microsoft/dotnet-nightly:2.1-runtime-alpine3.7
+FROM microsoft/dotnet:2.1-runtime
 WORKDIR /app
 COPY --from=build-env /app/out ./
 ENTRYPOINT ["dotnet", "DrayTek WAN Status.dll"]
