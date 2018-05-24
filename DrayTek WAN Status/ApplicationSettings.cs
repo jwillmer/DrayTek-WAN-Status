@@ -1,41 +1,101 @@
-﻿using System;
-using System.Collections.Generic;    
-using System.Text;    
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace DrayTek_WAN_Status {
     public class ApplicationSettings {
 
         public ApplicationSettings() {
             DisableConsoleOutput = false;
-            OutputRawData = false;
-            ListeningPort = 51400;
-            DrayTekIp = "192.168.0.1";
-            StorageProvider = StorageProvider.InfluxDb;
-            InfluxDbVersion = CustomInfluxDbVersion.Latest;
-            InfluxDbUrl = "http://192.168.0.5:8086";
-            InflucDbUser = "username";
-            InfluxDbPassword = "password";
-            InfluxDbDatabaseName = "database";     
+            OutputRawData = false;        
+
+            QueryOptions = new QueryOptions {
+                Option = QueryOption.UDP,
+                Udp = new UdpOptions {
+                    ListeningPort = 51400,
+                    Ip = "192.168.0.1"
+                },
+                Telnet = new TelnetOptions {
+                    Ip = "192.168.0.1",
+                    User = "admin",
+                    Password = "password",
+                    QueryIntervalSeconds = 30
+                }
+            };
+
+            StorageProvider = new StorageProvider {
+                StorageProviderOption = StorageProviderOption.CSV,
+                InfluxDb = new InfluxDbSettings {
+                    Version = CustomInfluxDbVersion.Latest,
+                    Url = "http://192.168.0.5:8086",
+                    User = "username",
+                    Password = "password",
+                    DatabaseName = "database"
+                },
+                Csv = new CsvSettings {
+                    Delimiter = ";"
+                }
+            };
         }
-                                           
-       public bool DisableConsoleOutput { get; set; }
+
+        public bool DisableConsoleOutput { get; set; }
 
         public bool OutputRawData { get; set; }
 
+        public QueryOptions QueryOptions { get; set; }
+
+        public StorageProvider StorageProvider { get; set; }  
+    }
+
+    public class CsvSettings {
+        public string Delimiter { get; set; }
+    }
+
+    public class TelnetOptions {
+        public string User { get; set; }
+        public string Password { get; set; }
+        public int QueryIntervalSeconds { get; set; }
+        public string Ip { get; internal set; }
+    }
+
+    public class UdpOptions {                 
+        public int QueryIntervalSeconds { get; set; }
+        public int ListeningPort { get; internal set; }
+        public string Ip { get; internal set; }
+    }
+
+    public class QueryOptions {
+        public QueryOption Option { get; set; }
+        public UdpOptions Udp { get; set; }
+        public TelnetOptions Telnet { get; set; }
+    }
+
+    public class StorageProvider {
+        public StorageProviderOption StorageProviderOption { get; set; }
+        public InfluxDbSettings InfluxDb { get; set; }
+        public CsvSettings Csv { get; set; }
+    }
+
+    public class DrayTekSettings {
         public int ListeningPort { get; set; }
+        public string Ip { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
+    }
 
-        public string DrayTekIp { get; set; }
+    public class InfluxDbSettings {
+        public CustomInfluxDbVersion Version { get; set; }
+        public string Url { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
+        public string DatabaseName { get; set; }
+    }
 
-        public StorageProvider StorageProvider { get; set; }
-
-        public CustomInfluxDbVersion InfluxDbVersion { get; set; }
-
-        public string InfluxDbUrl { get; set; }
-
-        public string InflucDbUser { get; set; }
-
-        public string InfluxDbPassword { get; set; }
-
-        public string InfluxDbDatabaseName { get; set; }    
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum QueryOption {
+        UDP = 0,
+        Telnet = 1
     }
 }

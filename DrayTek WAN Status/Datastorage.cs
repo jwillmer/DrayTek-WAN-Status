@@ -12,13 +12,13 @@ using System.Threading.Tasks;
 
 namespace DrayTek_WAN_Status {
     public class Datastorage {
-        readonly StorageProvider _provider = Program.Settings.StorageProvider;
+        readonly StorageProviderOption _storageOption = Program.Settings.StorageProvider.StorageProviderOption;
 
         public void Write(WanStatus wan) {
-            if (_provider == StorageProvider.Disk) {
+            if (_storageOption == StorageProviderOption.CSV) {
                 WriteToDisk(wan);
             }
-            else if (_provider == StorageProvider.InfluxDb) {
+            else if (_storageOption == StorageProviderOption.InfluxDb) {
                 WriteToInfluxDbAsync(wan);
             }
             else {
@@ -37,8 +37,14 @@ namespace DrayTek_WAN_Status {
         static string ExceptionLogPath = Path.Combine(DirectoryPath, "data", "exception.log");
 
         void WriteToDisk(WanStatus wan) {
-            var header = $"Date; Time; Is Connected; Upload Speed ({wan.SpeedUnit}); Download Speed ({wan.SpeedUnit})";
-            var content = $"{wan.Timestamp.Date.ToString("yyyy-MM-dd")}; {wan.Timestamp.TimeOfDay}; {wan.IsConnected}; {wan.UpSpeed}; {wan.DownSpeed}";
+            var path = Path.Combine(DirectoryPath, "data");
+            if (!Directory.Exists(path)) {
+                Directory.CreateDirectory(path);
+            }
+
+            var delimiter = Program.Settings.StorageProvider.Csv.Delimiter;
+            var header = $"Date{delimiter} Time{delimiter} Is Connected{delimiter} Upload Speed ({wan.SpeedUnit}){delimiter} Download Speed ({wan.SpeedUnit})";
+            var content = $"{wan.Timestamp.Date.ToString("yyyy-MM-dd")}{delimiter} {wan.Timestamp.TimeOfDay}{delimiter} {wan.IsConnected}{delimiter} {wan.UpSpeed}{delimiter} {wan.DownSpeed}";
             WriteToDisk(LogPath, content, header);
         }
 
@@ -67,11 +73,11 @@ namespace DrayTek_WAN_Status {
         #region InfluxDB
 
         void WriteToInfluxDbAsync(WanStatus wan) {
-            var settings = Program.Settings;
-            var influxDbClient = new InfluxDbClient(settings.InfluxDbUrl,
-                                                    settings.InflucDbUser,
-                                                    settings.InfluxDbPassword,
-                                                    (InfluxDbVersion)settings.InfluxDbVersion);
+            var settings = Program.Settings.StorageProvider.InfluxDb;
+            var influxDbClient = new InfluxDbClient(settings.Url,
+                                                    settings.User,
+                                                    settings.Password,
+                                                    (InfluxDbVersion)settings.Version);
 
             var pointToWrite = new Point() {
                 Name = "syslog", // serie/measurement/table to write into
@@ -90,7 +96,7 @@ namespace DrayTek_WAN_Status {
                 Timestamp = wan.Timestamp // optional (can be set to any DateTime moment)
             };
 
-            var response = influxDbClient.Client.WriteAsync(pointToWrite, settings.InfluxDbDatabaseName);
+            var response = influxDbClient.Client.WriteAsync(pointToWrite, settings.DatabaseName);
             try {
                 response.Wait();
             }
@@ -103,8 +109,8 @@ namespace DrayTek_WAN_Status {
     #endregion
 
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum StorageProvider {
-        Disk = 0,
+    public enum StorageProviderOption {
+        CSV = 0,
         InfluxDb = 1
     }
 

@@ -14,6 +14,7 @@
     <PackageReference Include="InfluxData.Net" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.CommandLineUtils" Version="1.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Telnet" Version="0.8.1" />
   </ItemGroup>
 
 </Project>
